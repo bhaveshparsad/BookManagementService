@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package protoFiles;
+option go_package = "BookManagementService/protoFiles";
+
+message Book{
+    uint64 Id = 1;
+    string BookTitle = 2;
+    string BookAuthor = 3;
+}
+
+// Create Book
+message CreateRequest{
+    Book book = 1;
+}
+
+message CreateResponse{
+    Book book = 1;
+}
+
+//Get All Books
+message GetAllRequest {
+
+}
+
+message GetAllResponse {
+    Book book = 1;  
+}
+
+//Search Book
+message SearchRequest {
+    oneof search{
+        string BookTitle = 1;
+        string BookAuthor = 2;
+    }
+    
+}
+
+message SearchResponse {
+    Book book = 1;
+}
+
+//Update Book
+message UpdateRequest {
+    string title = 1;
+}
+
+message UpdateResponse {
+    Book book = 1;
+}
+
+//Delete Book
+message DeleteRequest {
+    string BookTitle = 1;
+}
+
+message DeleteResponse {
+    bool delete = 1;
+}
+
+//Service 
+service BookMgmtService{
+
+    //Create Book
+    rpc CreateBook(CreateRequest) returns (CreateResponse); //Unary
+
+    //Get All Books
+    rpc GetAllBooks(GetAllRequest) returns (stream GetAllResponse); //Streaming
+
+    //Search Book
+    rpc SearchBook(SearchRequest) returns (stream SearchResponse); //Streaming
+
+    //Update Book
+    rpc UpdateBook(UpdateRequest) returns (UpdateResponse); //Unary
+
+    //Delete Book
+    rpc DeleteBook(DeleteRequest) returns (DeleteResponse); //Unary
+
+}
