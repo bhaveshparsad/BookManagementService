@@ -81,7 +81,7 @@ func TestLmsImp(t *testing.T) {
 		BookTitle:  "updated test title",
 		BookAuthor: "updated test title",
 	}
-	_, err = client.UpdateBook(ctx, &pb.UpdateRequest{Book: updateBook})
+	_, err = client.UpdateBook(ctx, &pb.UpdateRequest{Title: updateBook.BookTitle})
 	if err != nil {
 		t.Error("Test UpdateBooks FAILED!\nerr: ", err)
 	}

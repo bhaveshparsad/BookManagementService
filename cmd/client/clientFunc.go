@@ -47,7 +47,7 @@ func BookCreate(client pb.BookMgmtServiceClient, ctx context.Context) error {
 	}
 	//print
 	log.Printf(`New Book Uploaded:
-	Book Id: %s
+	Book Id: %d
 	Title: %s
 	Author: %s`, response.Book.Id, response.Book.BookTitle, response.Book.BookAuthor)
 
@@ -155,13 +155,13 @@ func BookUpdate(client pb.BookMgmtServiceClient, ctx context.Context) error {
 		BookAuthor: author,
 	}
 	//Call UpdateBook that returns a Book as response
-	response, err := client.UpdateBook(ctx, &pb.UpdateRequest{Book: updateBook})
+	response, err := client.UpdateBook(ctx, &pb.UpdateRequest{Title: updateBook.BookTitle})
 	if err != nil {
 		return errors.New(fmt.Sprint("Could not update book: \n", err))
 	}
 	//print
 	log.Printf(`Book Updated:
-	Book Id: %s
+	Book Id: %d
 	Title: %s
 	Author: %s`, response.Book.Id, response.Book.BookTitle, response.Book.BookAuthor)
 

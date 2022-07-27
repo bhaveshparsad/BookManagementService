@@ -41,26 +41,27 @@ func (s *BookMgmtServiceServer) CreateBook(ctx context.Context, req *pb.CreateRe
 
 //Update Book
 func (s *BookMgmtServiceServer) UpdateBook(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
-	book := req.
+	updatedOne := req.Book
+	oldOne := req.Title
 	
 	//request Validation
-	if book.BookTitle == "" || book.BookAuthor == "" {
+	if updatedOne.BookTitle == "" || updatedOne.BookAuthor == "" || oldOne =="" {
 		return nil, errors.New("invalid Data")
 	}
 
 	bookData := model.Book{
-		Title:  book.BookTitle,
-		Author: book.BookAuthor,
+		Title:  updatedOne.BookTitle,
+		Author: updatedOne.BookAuthor,
 	}
 
-	id, err := database.UpdateBook(ctx, bookData, book.BookTitle)
+	id, err := database.UpdateBook(ctx, bookData, oldOne)
 	if err != nil {
 		return nil, err
 	}
 
-	book.Id = uint64(id)
+	updatedOne.Id = uint64(id)
 
-	return &pb.UpdateResponse{Book: &pb.Book{Id: book.Id, BookTitle: book.BookTitle, BookAuthor: book.BookAuthor}}, nil
+	return &pb.UpdateResponse{Book: &pb.Book{Id: updatedOne.Id, BookTitle: updatedOne.BookTitle, BookAuthor: updatedOne.BookAuthor}}, nil
 }
 
 //Delete Book
