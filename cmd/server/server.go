@@ -7,7 +7,7 @@ import (
 
 	pb "BookManagementService/protoFiles"
 
-	c "BookManagementService/crudImp"
+	c "BookManagementService/service"
 
 	"google.golang.org/grpc"
 )
