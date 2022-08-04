@@ -1,4 +1,4 @@
-package crudImp
+package service
 
 import (
 	"context"
@@ -31,7 +31,7 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 	return lis.Dial()
 }
 
-func TestLmsImp(t *testing.T) {
+func Testservice(t *testing.T) {
 
 	//Dial a connection to grpc Server
 	ctx := context.Background()
