@@ -1,4 +1,4 @@
-package crudImp
+package service
 
 import (
 	"context"
@@ -41,27 +41,27 @@ func (s *BookMgmtServiceServer) CreateBook(ctx context.Context, req *pb.CreateRe
 
 //Update Book
 func (s *BookMgmtServiceServer) UpdateBook(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
-	updatedOne := req.Book
-	oldOne := req.Title
-	
+	bookUpdates := Book
+	oldTitle := req.Title
+
 	//request Validation
-	if updatedOne.BookTitle == "" || updatedOne.BookAuthor == "" || oldOne =="" {
+	if bookUpdates.BookTitle == "" || bookUpdates.BookAuthor == "" || oldTitle == "" {
 		return nil, errors.New("invalid Data")
 	}
 
 	bookData := model.Book{
-		Title:  updatedOne.BookTitle,
-		Author: updatedOne.BookAuthor,
+		Title:  bookUpdates.BookTitle,
+		Author: bookUpdates.BookAuthor,
 	}
 
-	id, err := database.UpdateBook(ctx, bookData, oldOne)
+	id, err := database.UpdateBook(ctx, bookData, oldTitle)
 	if err != nil {
 		return nil, err
 	}
 
-	updatedOne.Id = uint64(id)
+	bookUpdates.Id = uint64(id)
 
-	return &pb.UpdateResponse{Book: &pb.Book{Id: updatedOne.Id, BookTitle: updatedOne.BookTitle, BookAuthor: updatedOne.BookAuthor}}, nil
+	return &pb.UpdateResponse{Book: &pb.Book{Id: bookUpdates.Id, BookTitle: bookUpdates.BookTitle, BookAuthor: bookUpdates.BookAuthor}}, nil
 }
 
 //Delete Book
