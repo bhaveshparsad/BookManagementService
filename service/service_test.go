@@ -89,7 +89,7 @@ func Testservice(t *testing.T) {
 	t.Log("Test UpdateBooks PASSED.")
 
 	//Test DeleteBook
-	_, err = client.DeleteBook(ctx, &pb.DeleteRequest{ID: uint64(id)})
+	_, err = client.DeleteBook(ctx, &pb.DeleteRequest{BookTitle: updateBook.BookTitle})
 	if err != nil {
 		t.Error("Test DeleteBooks FAILED!\nerr: ", err)
 	}

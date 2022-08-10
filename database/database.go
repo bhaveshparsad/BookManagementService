@@ -37,11 +37,12 @@ func CreateBook(ctx context.Context, newBook model.Book) (uint, error) {
 }
 
 //Update Book
-func UpdateBook(ctx context.Context, updateBook model.Book, title string) (uint, error) {
+func UpdateBook(ctx context.Context, updateBook model.Book, id uint64) (uint, error) {
 
 	var book model.Book
 
-	err := DB.Where(&model.Book{Title: title}).Find(&book).Error
+	err := DB.Where("ID=?", id).Find(&book).Error
+	//(&model.Book{T}).Find(&book).Error
 	if err != nil {
 		return 0, err
 	}

@@ -155,7 +155,7 @@ func BookUpdate(client pb.BookMgmtServiceClient, ctx context.Context) error {
 		BookAuthor: author,
 	}
 	//Call UpdateBook that returns a Book as response
-	response, err := client.UpdateBook(ctx, &pb.UpdateRequest{Title: updateBook.BookTitle})
+	response, err := client.UpdateBook(ctx, &pb.UpdateRequest{Book: updateBook})
 	if err != nil {
 		return errors.New(fmt.Sprint("Could not update book: \n", err))
 	}

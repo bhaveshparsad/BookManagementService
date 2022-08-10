@@ -1,10 +1,11 @@
 package service
 
 import (
-	"context"
-	"errors"
 	"BookManagementService/model"
 	pb "BookManagementService/protoFiles"
+	"context"
+	"errors"
+	"reflect"
 
 	"BookManagementService/database"
 )
@@ -41,11 +42,12 @@ func (s *BookMgmtServiceServer) CreateBook(ctx context.Context, req *pb.CreateRe
 
 //Update Book
 func (s *BookMgmtServiceServer) UpdateBook(ctx context.Context, req *pb.UpdateRequest) (*pb.UpdateResponse, error) {
-	bookUpdates := Book
-	oldTitle := req.Title
+	bookUpdates := req.GetBook()
+	//oldTitle := req.Title
+
 
 	//request Validation
-	if bookUpdates.BookTitle == "" || bookUpdates.BookAuthor == "" || oldTitle == "" {
+	if bookUpdates.BookTitle == "" || bookUpdates.BookAuthor == "" || reflect.ValueOf(bookUpdates.Id) == reflect.Zero(reflect.TypeOf(bookUpdates.Id)) {
 		return nil, errors.New("invalid Data")
 	}
 
@@ -54,7 +56,7 @@ func (s *BookMgmtServiceServer) UpdateBook(ctx context.Context, req *pb.UpdateRe
 		Author: bookUpdates.BookAuthor,
 	}
 
-	id, err := database.UpdateBook(ctx, bookData, oldTitle)
+	id, err := database.UpdateBook(ctx, bookData, bookUpdates.Id)
 	if err != nil {
 		return nil, err
 	}

@@ -42,7 +42,8 @@ message SearchResponse {
 
 //Update Book
 message UpdateRequest {
-    string title = 1;
+    Book book = 1;
+    string title = 2;
 }
 
 message UpdateResponse {
