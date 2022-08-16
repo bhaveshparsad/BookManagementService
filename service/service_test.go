@@ -31,7 +31,7 @@ func bufDialer(context.Context, string) (net.Conn, error) {
 	return lis.Dial()
 }
 
-func Testservice(t *testing.T) {
+func TestService(t *testing.T) {
 
 	//Dial a connection to grpc Server
 	ctx := context.Background()
