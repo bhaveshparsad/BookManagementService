@@ -1,10 +1,10 @@
 package main
 
 import (
+	pb "BookManagementService/protoFiles"
 	"bufio"
 	"context"
 	"fmt"
-	pb "BookManagementService/protoFiles"
 	"log"
 	"os"
 	"strconv"
@@ -12,16 +12,18 @@ import (
 	"time"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
-const address = ":54321"
+const address = ":55001"
 
 var reader *bufio.Reader = bufio.NewReader(os.Stdin)
 
 func main() {
 
 	//Dial a connection to grpc Server
-	connection, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
+	//connection, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
+	connection, err := grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatal("Failed Dial... ", err)
 	}
@@ -60,7 +62,7 @@ func main() {
 		switch option {
 		case 1:
 
-			err := BookCreate(client, ctx)
+			err := CreateBook(client, ctx)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -68,7 +70,7 @@ func main() {
 			continue
 		case 2:
 
-			err := GetBooks(client, ctx)
+			err := GetAllBooks(client, ctx)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -76,7 +78,7 @@ func main() {
 			continue
 		case 3:
 
-			err := BookSearch(client, ctx)
+			err := SearchBook(client, ctx)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -84,7 +86,7 @@ func main() {
 			continue
 		case 4:
 
-			err := BookUpdate(client, ctx)
+			err := UpdateBook(client, ctx)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -92,7 +94,7 @@ func main() {
 			continue
 		case 5:
 
-			err := BookDelete(client, ctx)
+			err := DeleteBook(client, ctx)
 			if err != nil {
 				fmt.Println(err)
 			}

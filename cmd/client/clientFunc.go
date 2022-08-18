@@ -12,7 +12,7 @@ import (
 )
 
 //Create Book
-func BookCreate(client pb.BookMgmtServiceClient, ctx context.Context) error {
+func CreateBook(client pb.BookMgmtServiceClient, ctx context.Context) error {
 
 	//Input
 	fmt.Println("Enter Details:  ")
@@ -32,7 +32,7 @@ func BookCreate(client pb.BookMgmtServiceClient, ctx context.Context) error {
 	author = strings.TrimSpace(author)
 
 	if title == "" || author == "" {
-		return errors.New(("Empty..."))
+		return errors.New(("Empty"))
 	}
 
 	//Creating book to send as request
@@ -55,7 +55,7 @@ func BookCreate(client pb.BookMgmtServiceClient, ctx context.Context) error {
 }
 
 //Get All Books
-func GetBooks(client pb.BookMgmtServiceClient, ctx context.Context) error {
+func GetAllBooks(client pb.BookMgmtServiceClient, ctx context.Context) error {
 
 	fmt.Print("Enter page no.: ")
 	input, err := reader.ReadString('\n')
@@ -65,7 +65,7 @@ func GetBooks(client pb.BookMgmtServiceClient, ctx context.Context) error {
 	input = strings.TrimSpace(input)
 	pageNo, err := strconv.ParseInt(input, 10, 32)
 	if err != nil {
-		return errors.New("Invalid page no.")
+		return errors.New("invalid page no")
 	}
 
 	fmt.Print("No. of books in page:  ")
@@ -76,7 +76,7 @@ func GetBooks(client pb.BookMgmtServiceClient, ctx context.Context) error {
 	input = strings.TrimSpace(input)
 	NoOfBooks, err := strconv.ParseInt(input, 10, 32)
 	if err != nil {
-		return errors.New("Invalid input...")
+		return errors.New("invalid input")
 	}
 
 	print := (pageNo - 1) * NoOfBooks
@@ -115,7 +115,7 @@ func GetBooks(client pb.BookMgmtServiceClient, ctx context.Context) error {
 }
 
 //Update Book
-func BookUpdate(client pb.BookMgmtServiceClient, ctx context.Context) error {
+func UpdateBook(client pb.BookMgmtServiceClient, ctx context.Context) error {
 
 	fmt.Println("Update--- ")
 
@@ -141,7 +141,7 @@ func BookUpdate(client pb.BookMgmtServiceClient, ctx context.Context) error {
 	author = strings.TrimSpace(author)
 
 	if id == "" || title == "" || author == "" {
-		return errors.New(fmt.Sprint("Empty..."))
+		return errors.New("Empty")
 	}
 
 	num, err := strconv.ParseInt(id, 10, 64)
@@ -169,7 +169,7 @@ func BookUpdate(client pb.BookMgmtServiceClient, ctx context.Context) error {
 }
 
 //Delete Book
-func BookDelete(client pb.BookMgmtServiceClient, ctx context.Context) error {
+func DeleteBook(client pb.BookMgmtServiceClient, ctx context.Context) error {
 
 	fmt.Printf("Enter Book Title u want to delete:  ")
 	input, err := reader.ReadString('\n')
@@ -190,7 +190,7 @@ func BookDelete(client pb.BookMgmtServiceClient, ctx context.Context) error {
 }
 
 //Search Books
-func BookSearch(client pb.BookMgmtServiceClient, ctx context.Context) error {
+func SearchBook(client pb.BookMgmtServiceClient, ctx context.Context) error {
 
 	var stream pb.BookMgmtService_SearchBookClient
 
@@ -208,6 +208,9 @@ func BookSearch(client pb.BookMgmtServiceClient, ctx context.Context) error {
 
 	input = strings.TrimSpace(input)
 	choice, err := strconv.ParseInt(input, 10, 64)
+	if err != nil{
+		return err
+	}
 
 	switch choice {
 	case 1:
